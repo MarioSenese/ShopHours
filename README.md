@@ -67,11 +67,11 @@ Call external js and css files, into header:
 ```
 
 
-  Note: It has been used
+  Note: It has been used normally
   ```html
   <input type="text" ... />
   ```
-  and not
+  and not the classic
    ```html
     <input type="time" ... />
   ```

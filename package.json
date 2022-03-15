@@ -1,0 +1,28 @@
+{
+  "name": "@mariosenese/shophours",
+  "version": "1.0.5",
+  "description": "ShopHours configurator has been implemented to enter the opening and closing times of your shop",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarioSenese/ShopHours.git"
+  },
+  "keywords": [
+    "shophours",
+    "mariosenese",
+    "npm",
+    "package",
+    "javascript",
+    "html5",
+    "css3"
+  ],
+  "author": "Mario Senese",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MarioSenese/ShopHours/issues"
+  },
+  "homepage": "https://github.com/MarioSenese/ShopHours#readme"
+}

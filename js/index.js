@@ -193,7 +193,7 @@ let hourSelected, minuteSelected;
          *  For only days from Monday to Friday.
          *  Block or disable items
          *      1. minor sibling if hour selected value is lower to parent's sibling input value, from the value of the latter to rise
-         *      2.
+         *      2. major sibling if hour selected value is higher to parent's sibling input value, from the value of the latter to rise
         */
             
             if(inputParent.parentNode.parentNode.classList.value.split(" ")[1].toLowerCase() == "monday" && inputParent.parentNode.parentNode.classList.value.split(" ")[2].toLowerCase() == "friday" ) {

@@ -1,0 +1,131 @@
+/* 
+    Created on : 5 mar 2022, 12:10:50
+    Author     : Mario
+*/
+
+html, body { height: 100%; width: 100%; }
+
+body { display: block; }
+body { overflow: auto; }
+body { margin: auto; }
+body { font-family: lato,sans-serif; }
+body { width: 100%; height: 100%; }
+body { color: #2a3139; }
+body { background-color: #ffffff; }
+
+#hours { position: relative; display: block; }
+#hours { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+#hours { width: 100%; max-width: 1400px; height: auto; }
+#hours { margin: auto; }
+#hours { font-family: Verdana, sans-serif; }
+
+#hours > fieldset { margin: auto auto 50px; padding: 10px; }
+#hours > fieldset { border: 1px solid #2a313952; }
+#hours > fieldset { width: 60%; }
+
+#hours > fieldset legend { padding: 0 10px; margin: 0; }
+#hours > fieldset legend { color: #2a3139; }
+#hours > fieldset legend { font-size: 1.45em; font-weight: 700; }
+
+#hours > fieldset .shops .h { display: block; }
+#hours > fieldset .shops .h { text-align: center; }
+#hours > fieldset .shops .h { margin-bottom: 10px; }
+#hours > fieldset .shops .h { width: 100% }
+#hours > fieldset .shops .h span { position: relative; display: inline-block; }
+#hours > fieldset .shops .h span { width: 50%; }
+#hours > fieldset .shops .h span { margin: 0 1px 0 30px; }
+#hours > fieldset .shops .h span { float: left; }
+#hours > fieldset .shops .h div:before { display: block; }
+#hours > fieldset .shops .h.monday.friday div.morning:before { content: "Monday-Friday | Morning" } /*{ content: "Lun/Ven | Mattina" }*/
+#hours > fieldset .shops .h.monday.friday div.afternoon:before { content: "Monday-Friday | Afternoon" } /*{ content: "Lun/Ven | Pomeriggio" }*/
+#hours > fieldset .shops .h.saturday div.morning:before { content: "Saturday | Morning" } /*{ content: "Sabato | Mattina" }*/
+#hours > fieldset .shops .h.saturday div.afternoon:before { content: "Saturday | Afternoon"} /*{ content: "Sabato | Pomeriggio" }*/
+#hours > fieldset .shops .h span.to:after { position: absolute; }
+#hours > fieldset .shops .h span.to:after { content: '\f017' }
+#hours > fieldset .shops .h span.to:after { font-family: 'FontAwesome'; font-size: 20px; }
+#hours > fieldset .shops .h span.to:after { color: #e1e1e1 }
+#hours > fieldset .shops .h span.to:after { top: 26.805px; right: 6px; }
+
+#hours > fieldset .shops .h span input { text-align: center; }
+#hours > fieldset .shops .h .hours { position: absolute; }
+#hours > fieldset .shops .h .hours { background-color: #ffffff; }
+#hours > fieldset .shops .h .hours ul { list-style: none; }
+#hours > fieldset .shops .h .hours ul { display: inline-block; }
+#hours > fieldset .shops .h .hours ul { padding: 0; }
+#hours > fieldset .shops .h .hours ul { height: 100%; max-height: 150px; }
+#hours > fieldset .shops .h .hours ul { overflow-y: scroll; }
+#hours > fieldset .shops .h .hours ul::-webkit-scrollbar { width: .1px; }
+#hours > fieldset .shops .h .hours ul::-webkit-scrollbar-thumb { border-radius: 10px; background-color: #980000; }
+#hours > fieldset .shops .h .hours ul::-webkit-scrollbar-track { background: #fbfbfb; }
+#hours > fieldset .shops .h .hours ul li { padding: 15px; }
+#hours > fieldset .shops .h .hours ul li[selected], #hours > fieldset .shops .h .hours ul li { border-radius: 5px; border: 1px solid #fff; }
+#hours > fieldset .shops .h .hours ul li:not([disabled]):hover, #hours > fieldset .shops .h .hours ul li[selected] { background-color: #980000; color: #ffffff; }
+#hours > fieldset .shops .h .hours ul li[disabled]:hover { background-color: #e1e1e1; }
+#hours > fieldset .shops .h .hours ul li[selected], #hours > fieldset .shops .h .hours ul li:hover { transition: all .15s linear 0s; -o-transition: all .15s linear 0s; -webkit-transition: all .15s linear 0s; }
+#hours > fieldset .shops .h .hours ul li:hover { cursor: pointer; }
+
+#hours > fieldset .shops .h .hours { top: 34px; }
+#hours > fieldset .shops .h .hours { z-index: 1; }
+#hours > fieldset .shops .h .hours { width: 100%; }
+#hours > fieldset .shops .h .hours { border: 1px solid #bbbbbf; }
+#hours > fieldset .shops .h .hours ul { margin: auto; }
+#hours > fieldset .shops .h .hours ul { width: 50%; }
+
+#hours > fieldset .shops .h span input { width: 100%; }
+#hours > fieldset .shops .h span input { border: 1px solid #b9b9b9; line-height: 1.42857143; }
+#hours > fieldset .shops .h span input { background-color: #ffffff; color: #2a3139; }
+#hours > fieldset .shops .h span input { font-size: 15px; }
+#hours > fieldset .shops .h span input { padding: 6px 0; }
+#hours > fieldset .shops .h span input:focus { resize: none; outline: none; }
+
+#hours > fieldset .shops .h span { margin: 0; }
+#hours > fieldset .shops .h span.from:after, #hours > fieldset .shops .h span.from:before, #hours > fieldset .shops .h span.to:before { position: absolute; color: #bbbbbf; top: 9.21px; font-size: .9em; }
+#hours > fieldset .shops .h span.from:after { content: ''; }
+#hours > fieldset .shops .h span.from:after { height: 20px; }
+#hours > fieldset .shops .h span.from:after { right: 0; }
+#hours > fieldset .shops .h span.from:after { border-width: .5px; border-color: #bdbdbd; border-style: inset; }
+#hours > fieldset .shops .h span.from:before, #hours > fieldset .shops .h span.to:before { left: 0; }
+#hours > fieldset .shops .h span.from:before, #hours > fieldset .shops .h span.to:before { margin: auto 5px; }
+#hours > fieldset .shops .h span.from:before { content: 'from'; } /*{ content: 'dalle'; }*/
+#hours > fieldset .shops .h span.to:before { content: 'to'; } /*{ content: 'alle'; }*/
+#hours > fieldset .shops .h span.from input { border-right: none; }
+#hours > fieldset .shops .h span.to input { border-left: none; }
+#hours > fieldset .shops .h span input { border-radius: 0; }
+#hours > fieldset .shops .h span.to:after { top: 8.615px; }
+#hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { width: 40%; }
+#hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { display: inline-block; }
+#hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { margin: auto 20px; }
+
+
+
+@media(max-width: 1024px) {
+    
+    #hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { width: auto; }
+    
+}
+
+@media(max-width: 768px) {
+    
+    #hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { width: 100%; }
+    #hours > fieldset .shops .h .morning, #hours > fieldset .shops .h .afternoon { margin: 5px auto; }
+    
+}
+
+@media(max-width: 425px) {
+    
+    #hours > fieldset { width: 80%; }
+    
+}
+
+@media(max-width: 320px) {
+    
+    #hours > fieldset .shops .h span { width: 100%; }
+    #hours > fieldset .shops .h span.from:after { content: none; }
+    #hours > fieldset .shops .h span.from input { border-right: 1px solid #b9b9b9; }
+    #hours > fieldset .shops .h span.to input { border-left: 1px solid #b9b9b9; }
+    #hours > fieldset .shops .h span { margin: 5px auto; }
+    
+}
+
+
+

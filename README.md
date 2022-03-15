@@ -75,9 +75,3 @@ Call external js and css files, into header:
    ```html
     <input type="time" ... />
   ```
-
-### Screenshot - ShopHours configurator
-![1](./images/1.jpg)
-![1](./images/2.jpg)
-![1](./images/3.jpg)
-![1](./images/4.jpg)

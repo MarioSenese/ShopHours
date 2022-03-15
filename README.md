@@ -65,3 +65,13 @@ Call external js and css files, into header:
     </fieldset>
 </div>
 ```
+
+
+  Note: It has been used
+  ```html
+  <input type="text" ... />
+  ```
+  and not
+   ```html
+    <input type="time" ... />
+  ```

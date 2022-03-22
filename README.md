@@ -12,7 +12,7 @@
   
   
   ![repo size](https://img.shields.io/github/repo-size/MarioSenese/ShopHours?style=for-the-badge)
-  [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)]()
+  [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MarioSenese/)
   
   [![license](https://img.shields.io/github/license/MarioSenese/ShopHours?style=for-the-badge)](https://github.com/MarioSenese/ShopHours/blob/main/LICENSE)
   

@@ -1,76 +1,162 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        
-        <title>Shop Hours</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <script src="https://use.fontawesome.com/fdd24fe3a9.js"></script>
-        
-        <script src="js/index.js" async></script>
-        <link href="css/style.css" rel="stylesheet" type="text/css" />
-        
-    </head>
-    <body>
-        
-        <div id="hours" >
-            
-            <fieldset>
-                
-                <legend>Shop Hours</legend>
-                
-                <div class="shops">
-                    
-                    <div class="h monday friday">
-                        
-                        <div class="morning">
-                            
-                            <span class="from">
-                                <input type="text" class="time" value="06:00" readonly />
-                            </span>
-                            
-                            <span class="to">
-                                <input type="text" class="time" value="14:00" readonly />                                
-                            </span>
-                            
-                        </div>
-                        
-                        <div class="afternoon">
-                            
-                            <span class="from">
-                                <input type="text" class="time" value="15:00" readonly />
-                            </span>
-                            
-                            <span class="to">
-                                <input type="text" class="time" value="20:00" readonly />                                
-                            </span>
-                            
-                        </div>
-                        
-                    </div>
-                    
-                    <div class="h saturday">
-                        
-                        <div class="morning">
-                            
-                            <span class="from">
-                                <input type="text" class="time" value="06:00" readonly />                                
-                            </span>
-                            
-                            <span class="to">
-                                <input type="text" class="time" value="14:00" readonly />                                
-                            </span>
-                            
-                        </div>
-                                
-                    </div>
-                    
-                </div>
-                
-            </fieldset>
-            
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shop Hours</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        Shop
+        <span class="brand-dot">Hours</span>
+        <span class="brand-v">standalone</span>
+      </div>
+      <div id="liveChip" class="live-chip" role="status" aria-live="polite">
+        <span class="live-dot"></span>
+        <span id="liveLabel">—</span>
+      </div>
+      <div class="toolbar-right">
+        <span id="valBadge" class="val-badge val-ok">Valido</span>
+        <button class="save-btn" id="saveBtn">Salva</button>
+      </div>
+    </header>
+    <main class="page">
+      <div class="page-grid">
+        <!-- MAIN COLUMN -->
+        <div class="main-col">
+          <!-- WEEKLY HOURS -->
+          <div class="section-label">Orari settimanali</div>
+          <div class="card" style="margin-bottom: 24px">
+            <!-- Presets -->
+            <div class="preset-bar" role="group" aria-label="Preset orari">
+              <span
+                style="
+                  font-size: 9px;
+                  letter-spacing: 0.15em;
+                  text-transform: uppercase;
+                  color: var(--t3);
+                  align-self: center;
+                  margin-right: 4px;
+                "
+                >Preset</span
+              >
+              <button class="preset-btn" data-preset="standard">
+                Negozio std
+              </button>
+              <button class="preset-btn" data-preset="restaurant">
+                Ristorante
+              </button>
+              <button class="preset-btn" data-preset="pharmacy">
+                Farmacia
+              </button>
+              <button class="preset-btn" data-preset="gym">Palestra</button>
+              <button class="preset-btn" data-preset="office">Ufficio</button>
+            </div>
+
+            <ul
+              class="days-list"
+              id="daysList"
+              aria-label="Configurazione orari per giorno"
+            ></ul>
+          </div>
+
+          <!-- EXCEPTIONS -->
+          <div class="section-label">Eccezioni &amp; festività</div>
+          <div class="card">
+            <div class="card-head">
+              <span class="card-title">
+                Date speciali (chiusure / orari diversi)
+              </span>
+            </div>
+            <ul class="exceptions-list" id="excList"></ul>
+            <button
+              class="exc-add-btn"
+              id="excAddBtn"
+              aria-label="Aggiungi eccezione"
+            >
+              <span>+</span>Aggiungi data
+            </button>
+          </div>
         </div>
-        
-    </body>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+          <div class="section-label">Stato attuale</div>
+          <div class="card">
+            <div class="status-block">
+              <div class="status-time" id="clockEl">--:--</div>
+              <div id="statusNow" class="status-now">-</div>
+              <div id="statusSub" class="status-sub">-</div>
+              <div class="status-sep"></div>
+              <div class="next-label">Prossima variazione</div>
+              <div id="nextChange" class="next-val"></div>
+            </div>
+          </div>
+
+          <!-- EXPORT -->
+          <div class="section-label">Esporta</div>
+          <div class="card">
+            <div class="export-block">
+              <button class="exp-btn" id="expJson">
+                <span class="exp-icon">{ }</span>
+                <div>
+                  <div>JSON</div>
+                  <div class="exp-desc">API / storage</div>
+                </div>
+              </button>
+              <button class="exp-btn" id="expSchema">
+                <span class="exp-icon">🔍</span>
+                <div>
+                  <div>Schema.org</div>
+                  <div class="exp-desc">SEO / Google</div>
+                </div>
+              </button>
+              <button class="exp-btn" id="expText">
+                <span class="exp-icon">📄</span>
+                <div>
+                  <div>Testo leggibile</div>
+                  <div class="exp-desc">Email / stampa</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- JSON PREVIEW -->
+          <div class="section-label">Output JSON</div>
+          <div class="card">
+            <div class="schema-block">
+              <pre
+                class="schema-pre"
+                id="jsonPre"
+                aria-live="polite"
+                aria-label="Anteprima JSON"
+              ></pre>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- COPY DA POPUP -->
+    <div
+      class="copy-popup"
+      id="copyPopup"
+      role="dialog"
+      aria-label="Copia orari su altri giorni"
+    ></div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast" role="alert" aria-live="assertive">
+      <div class="toast-icon" id="toastIcon">✓</div>
+      <span id="toastMsg">-</span>
+    </div>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>

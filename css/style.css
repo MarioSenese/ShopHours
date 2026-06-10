@@ -38,7 +38,7 @@ body {
   color: var(--text);
   font-family: var(--mono);
   min-height: 100vh;
-  padding: 0 0 80px;
+  /* padding: 0 0 80px; */
 }
 
 /* ═══ TOP BAR ═══ */
@@ -241,6 +241,51 @@ body {
   background: var(--accent-a);
   box-shadow: 0 0 0 1px var(--accent) inset;
   font-weight: 500;
+}
+
+.sh-footer {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.sh-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sh-footer {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--t3);
+}
+
+.sh-footer strong {
+  color: var(--t2);
+  font-weight: 500;
+}
+
+.sh-footer a {
+  color: var(--t3);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--trans),
+    border-color var(--trans);
+}
+
+.sh-footer a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.sh-footer-sep {
+  color: var(--border-hi);
 }
 
 /* ═══ DAYS LIST ═══ */

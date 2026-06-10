@@ -49,7 +49,7 @@ Then open the address shown in the terminal.
 
 ## License
 
-[Apache License 2.0](LICENSE) © 2026 Mario Senese.
+[Apache License 2.0](LICENSE) © 2022-2026 Mario Senese.
 
 Free to use and modify, including commercially, **provided the copyright notice and
 authorship are kept** and any changes to the files are stated. The "ShopHours" name

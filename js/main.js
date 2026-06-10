@@ -398,12 +398,21 @@ document.querySelectorAll(".preset-btn").forEach((btn) => {
     const key = btn.dataset.preset;
     if (PRESETS[key]) {
       schedule = cloneSchedule(PRESETS[key]);
+      document
+        .querySelectorAll(".preset-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
       render();
       console.log(btn.textContent);
       toast(`Preset ${btn.textContent} applicato`, "⚡");
     }
   });
 });
+
+// Preset attivo all'avvio: 'Negozio std' (standard)
+document
+  .querySelector('.preset-btn[data-preset="standard"]')
+  ?.classList.add("active");
 
 // -- Aggiungi eccezione --
 document.getElementById("excAddBtn").addEventListener("click", () => {

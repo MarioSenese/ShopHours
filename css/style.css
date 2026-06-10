@@ -228,10 +228,19 @@ body {
   cursor: pointer;
   transition: var(--trans);
 }
+
 .preset-btn:hover {
   border-color: var(--accent);
   color: var(--accent);
   background: var(--accent-a);
+}
+
+.preset-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-a);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+  font-weight: 500;
 }
 
 /* ═══ DAYS LIST ═══ */

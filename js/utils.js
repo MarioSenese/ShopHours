@@ -7,7 +7,7 @@ import { DAYS, SCHEMA_DAY } from "./constants.js";
 
 // Deep clone di una configurazione, per non mutare i preset
 export function cloneSchedule(s) {
-  const out = [];
+  const out = {};
   Object.keys(s).forEach((k) => {
     out[k] = { open: s[k].open, slots: s[k].slots.map((sl) => ({ ...sl })) };
   });

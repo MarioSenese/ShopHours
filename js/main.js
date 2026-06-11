@@ -1,4 +1,4 @@
-import { DAYS, PRESETS, SCHEMA_DAY } from "./constants.js";
+import { DAYS, PRESETS, SCHEMA_DAY, STORAGE_KEY } from "./constants.js";
 import {
   cloneSchedule,
   validateSlots,
@@ -14,13 +14,28 @@ import {
 let schedule = cloneSchedule(PRESETS.standard);
 let exceptions = [
   { id: 1, date: "2025-12-25", label: "Natale - Chiuso" },
-  { id: 1, date: "2025-01-01", label: "Capodanno - Chiuso" },
+  { id: 2, date: "2025-01-01", label: "Capodanno - Chiuso" },
 ];
 let excIdCounter = 10;
 let copySourceDay = null;
 
 // -- Validazione globale --
-function globalValidate() {}
+function globalValidate() {
+  let allOk = true;
+  DAYS.forEach((d) => {
+    const day = schedule[d.key];
+    if (day.open && validateSlots(day.slots).length > 0) allOk = false;
+  });
+
+  const badge = document.getElementById("valBadge");
+  if (allOk) {
+    badge.textContent = "✓ Valido";
+    badge.className = "val-badge val-ok";
+  } else {
+    badge.textContent = "⚠ Errori";
+    badge.className = "val-badge val-warn";
+  }
+}
 
 // -- Render princiaple --
 const todayIdx = (new Date().getDay() + 6) % 7; // 0=monday
@@ -30,8 +45,9 @@ function render() {
   list.innerHTML = "";
 
   DAYS.forEach(({ key, label, abbr }, idx) => {
+    // Se per qualisiasi motivo un giorno mancasse, lo ricostruisco chiuso invece di andare in errore.
+    if (!schedule[key]) schedule[key] = { open: false, slots: [] };
     const day = schedule[key];
-    // console.log(key, day, label, abbr, idx, day.slots);
     const errors = day.open ? validateSlots(day.slots) : [];
     const isToday = idx === todayIdx;
 
@@ -81,7 +97,7 @@ function render() {
                     />
                 </div>
                 <button class="slot-del" title="Rimuovi fascia" aria-label="Rimuovi fascia ${i + 1} di ${label}"
-                    data-key="${key}" data-slot="${i}">x</button>
+                    data-day="${key}" data-slot="${i}">x</button>
             `;
         slotsCol.appendChild(slotEl);
       });
@@ -206,7 +222,6 @@ function bindDayEvents() {
     inp.addEventListener("change", (e) => {
       const { day, slot, field } = e.target.dataset;
       schedule[day].slots[parseInt(slot)][field] = e.target.value;
-      console.log(schedule[day]);
       render();
     });
   });
@@ -225,11 +240,8 @@ function bindDayEvents() {
   // Remove slot
   document.querySelectorAll(".slot-del").forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      const { key, slot } = e.target.dataset;
-      console.log("day", key);
-      console.log("slot", slot);
-      console.log(e.target.dataset);
-      schedule[key].slots.splice(parseInt(slot), 1);
+      const { day, slot } = e.target.dataset;
+      schedule[day].slots.splice(parseInt(slot), 1);
       render();
     });
   });
@@ -403,16 +415,10 @@ document.querySelectorAll(".preset-btn").forEach((btn) => {
         .forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
       render();
-      console.log(btn.textContent);
       toast(`Preset ${btn.textContent} applicato`, "⚡");
     }
   });
 });
-
-// Preset attivo all'avvio: 'Negozio std' (standard)
-document
-  .querySelector('.preset-btn[data-preset="standard"]')
-  ?.classList.add("active");
 
 // -- Aggiungi eccezione --
 document.getElementById("excAddBtn").addEventListener("click", () => {
@@ -502,6 +508,36 @@ function renderJSON() {
   document.getElementById("jsonPre").innerHTML = html;
 }
 
+// -- PERSISTENZA (localStorage) --
+function saveToStorage() {
+  try {
+    const payload = JSON.stringify({
+      schedule,
+      exceptions,
+      savedAt: new Date().toISOString(),
+    });
+    localStorage.setItem(STORAGE_KEY, payload);
+    return true;
+  } catch (e) {
+    // localStorage non disponibile
+    console.warn("Salvataggio locale non disponibile", e);
+    return false;
+  }
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (data && data.schedule) return data;
+    return null;
+  } catch (e) {
+    console.warn("Lettura salvataggio locale fallita: ", e);
+    return null;
+  }
+}
+
 // -- Export --
 document.getElementById("expJson").addEventListener("click", () => {
   downloadText(getJSON(schedule), "shophours.json", "application/json");
@@ -525,18 +561,30 @@ document.getElementById("expText").addEventListener("click", () => {
 // -- Salva --
 document.getElementById("saveBtn").addEventListener("click", () => {
   const btn = document.getElementById("saveBtn");
+
+  // 1. Persisti la configurazione (resta dopo il caricamento)
+  const persisted = saveToStorage();
+
+  // 2. Esporta i tre file: JSON, Schema.org e testo - azioni non obbligatorie
+  // downloadText(getJSON(), "shophours.json", "application/json");
+  // downloadText(getSchemaOrg(), "shophours-schema.json", "application/json");
+  // downloadText(getText(), "orari.txt");
+
+  // 3. Conferma visiva
   btn.textContent = "✓ Salvato";
   btn.style.background = "var(--ok)";
   setTimeout(() => {
     ((btn.textContent = "Salva"), (btn.style.background = "var(--accent)"));
   }, 2000);
-  toast("Configurazione salvata", "✓");
+  toast(
+    persisted ? "Configurazione salvata" : "Salvataggio locale non disponibile",
+    persisted ? "✓" : "⚠",
+  );
 });
 
 // -- Toast --
 let toastTimer = null;
 function toast(msg, icon = "✓") {
-  console.log(msg, icon);
   const el = document.getElementById("toast");
   document.getElementById("toastMsg").textContent = msg;
   document.getElementById("toastIcon").textContent = icon;
@@ -549,4 +597,43 @@ function toast(msg, icon = "✓") {
 setInterval(updateStatus, 30000);
 
 // INIT
+const _saved = loadFromStorage();
+if (_saved && _saved.schedule) {
+  // Ripristino robusto: parto da una base completa (7 giorni) e ci fondo solo i giorni validi del salvataggio.
+  // Così un salvataggio incompleto o in un vecchio formato non può mai lasciare un giorno mancante.
+  const base = cloneSchedule(PRESETS.standard);
+  DAYS.forEach(({ key }) => {
+    const d = _saved.schedule[key];
+    if (d && typeof d.open === "boolean" && Array.isArray(d.slots)) {
+      base[key] = {
+        open: d.open,
+        slots: d.slots
+          .filter(
+            (s) => s && typeof s.from === "string" && typeof s.to === "string",
+          )
+          .map((s) => ({ from: s.from, to: s.to })),
+      };
+    }
+  });
+  schedule = base;
+
+  if (Array.isArray(_saved.exceptions)) {
+    exceptions = _saved.exceptions
+      .filter((e) => e && e.date != null)
+      .map((e, i) => ({
+        id: e.id || 200 + i,
+        date: e.date,
+        label: e.label || "",
+      }));
+    excIdCounter =
+      exceptions.reduce((max, e) => Math.max(max, e.id || 0), 10) + 1;
+    // Stato personalizzato: nessun preset evidenziato di default
+  } else {
+    // Nessun salvataggio: parte dal preset 'Negozio std' evidenziato
+    document
+      .querySelector('.preset-btn[data-preset="standard"]')
+      ?.classList.add("active");
+  }
+}
+
 render();

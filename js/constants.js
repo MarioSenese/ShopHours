@@ -159,3 +159,5 @@ export const SCHEMA_DAY = {
   saturday: "Saturday",
   sunday: "Sunday",
 };
+
+export const STORAGE_KEY = "shophours:config";

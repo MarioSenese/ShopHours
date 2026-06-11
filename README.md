@@ -13,7 +13,7 @@
 
 ## What it is
 
-ShopHours is a self-contained web application for setting up a business's opening hours. You open it, configure the week, and export the result in ready-to-use formats. No build step and no dependencies — just a single HTML file that runs in the browser.
+ShopHours is a client-side web application for setting up a business's opening hours. You open it, configure the week, and export the result in ready-to-use formats. No build step and no external dependencies — plain HTML, CSS and ES modules running in the browser. The configuration is saved in the browser (localStorage), so it persists across reloads until you change it.
 
 ## Features
 
@@ -29,9 +29,9 @@ ShopHours is a self-contained web application for setting up a business's openin
 
 ## Usage
 
-Being a single self-contained file, you can simply **open it in your browser** to use it.
+The app uses ES modules, so it must be served over HTTP — opening index.html directly from the file system (file://) won't work, because browsers block module imports there.
 
-To run it from a local server (recommended for development):
+Run it from a local server (recommended for development):
 
 ```bash
 npx serve .
@@ -40,6 +40,22 @@ python3 -m http.server 8000
 ```
 
 Then open the address shown in the terminal.
+
+## Structure
+
+```
+ShopHours/
+├── index.html          # entry point (loads js/main.js as a module)
+├── css/                # stylesheets
+├── js/
+│   ├── main.js         # state, rendering, events, persistence
+│   ├── utils.js        # pure helpers (clone, validation, export)
+│   └── constants.js    # static data (days, presets, schema map)
+├── LICENSE
+├── NOTICE
+├── package.json
+└── README.md
+```
 
 ## Export formats
 
